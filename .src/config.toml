@@ -30,7 +30,7 @@ disableLanguages        = [""]
 
   [params.meta]
     # Sets the meta tag description
-    description         = "个人博客."
+    description         = "黄春华博客"
     # Sets the meta tag author
     author              = "Huang Chunhua"
     # If you would like to add more comprehensive favicon support passed root
@@ -56,8 +56,8 @@ disableLanguages        = [""]
   # required for proper functionality. HTML is supported within the params.
   [params.intro]
     header                = "黄春华"
-    paragraph             = "滴滴技术专家、对象存储负责人"
-    rssIntro              = false
+    paragraph             = "滴滴技术专家.百度T5高级工程师"
+    rssIntro              = true
     socialIntro           = true
 
     # This appears at the top of the sidebar above params.intro.header.
@@ -70,7 +70,7 @@ disableLanguages        = [""]
       alt                 = "Huang Chunhua"
 
   [params.sidebar]
-    about               = ""
+    about               = "黄春华博客"
     # Sets the number of recent posts to show in the sidebar. The default value is 5.
     postAmount          = 5
     # set to show or to hide categories in the sidebar
@@ -152,4 +152,3 @@ disableLanguages        = [""]
   github                = "huangchunhua"
   # Email
   email                 = "huangchunhua@nilebit.com"
-  qq                  = "190447919"

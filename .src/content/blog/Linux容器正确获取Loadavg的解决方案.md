@@ -1,8 +1,7 @@
 +++
 author = "黄春华"
 categories = ["Linux"]
-date = "2019-07-19"
-description = "Linux容器正确获取Loadavg的解决方案"
+date = "2018-07-01"
 featured = "pic04.jpg"
 featuredalt = ""
 featuredpath = "date"

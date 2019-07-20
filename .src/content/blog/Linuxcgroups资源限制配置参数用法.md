@@ -1,8 +1,7 @@
 +++
 author = "黄春华"
 categories = ["Linux"]
-date = "2019-07-19"
-description = "介绍关于Linux Cgroups资源限制配置参数用法"
+date = "2018-07-19"
 featured = "pic03.jpg"
 featuredalt = ""
 featuredpath = "date"
