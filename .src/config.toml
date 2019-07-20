@@ -56,7 +56,7 @@ disableLanguages        = [""]
   # required for proper functionality. HTML is supported within the params.
   [params.intro]
     header                = "黄春华"
-    paragraph             = "滴滴技术专家.百度T5高级工程师"
+    paragraph             = "滴滴技术专家.前百度T5高级工程师"
     rssIntro              = true
     socialIntro           = true
 
