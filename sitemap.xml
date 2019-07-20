@@ -3,42 +3,42 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://huangchunhua.github.io/about/</loc>
+    <lastmod>2019-07-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://huangchunhua.github.io/blog/</loc>
-    <lastmod>2019-07-19T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://huangchunhua.github.io/categories/</loc>
-    <lastmod>2019-07-19T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://huangchunhua.github.io/</loc>
-    <lastmod>2019-07-19T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://huangchunhua.github.io/categories/linux/</loc>
-    <lastmod>2019-07-19T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://huangchunhua.github.io/blog/linuxcgroups%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E7%94%A8%E6%B3%95/</loc>
-    <lastmod>2019-07-19T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://huangchunhua.github.io/blog/linux%E5%AE%B9%E5%99%A8%E6%AD%A3%E7%A1%AE%E8%8E%B7%E5%8F%96loadavg%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</loc>
-    <lastmod>2019-07-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://huangchunhua.github.io/about/</loc>
-    <lastmod>2019-07-10T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>

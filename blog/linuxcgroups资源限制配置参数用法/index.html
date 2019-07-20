@@ -3,7 +3,7 @@
   <head>
   <meta charset="utf-8">
 <title>Linux Cgroups资源限制配置参数用法 - Huang Chunhua</title>
-<meta name="description" content="介绍关于Linux Cgroups资源限制配置参数用法">
+<meta name="description" content="黄春华博客">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
@@ -11,11 +11,13 @@
   <meta name="generator" content="Hugo 0.55.6" />
   
 <meta itemprop="name" content="Linux Cgroups资源限制配置参数用法">
-<meta itemprop="description" content="介绍关于Linux Cgroups资源限制配置参数用法">
+<meta itemprop="description" content="背景 Cgroups是control groups的缩写，是Linux内核提供的一种可以限制、记录、隔离进程组（process groups）所使用的物理资源（如：cpu,memory,IO等等）的机制。最初由google的工程师提出，后来被整合进Linux内核。本文重点cgroups配置参数用法，目的是能为后续容器开发提供帮助。
+配置参数用法 1.blkio - BLOCK IO资源管理 限额类 限额类是主要有两种策略，一种是基于完全公平队列调度的按权重分配各个cgroup所能占用总体资源的百分比。好处是当资源空闲时可以充分利用，但只能用于最底层节点cgroup的配置；另一种则是设定资源使用上限。这种限额在各个层次的cgroup都可以配置，但这种限制较为生硬并且容器之间依然会出现资源的竞争。
+ 按比例分配块设备IO资源  blkio.weight: 指定 cgroup 默认可用 IO 的比例（加权），值的范围为&rdquo;100~1000&rdquo;。该值可由具体设备的blkio.weight_device参数覆盖。例如：设置cgroup lv0的默认加权为 500： cgset -r blkio.weight=100 lv0。 blkio.weight_device：指定 cgroup 中指定设备的可用 IO 比例（加权），范围为&rdquo;100~1000&rdquo;，格式为&rdquo;major:minor weight&rdquo;。 例如：设置 cgroup lv0 对 /dev/sda 的加权为500。 cgset -r blkio.weight_device=&ldquo;8:0 500&rdquo; lv0。  控制IO读写速度上限  blkio.throttle.read_bps_device / blkio.throttle.write_bps_device：指定cgroup中某设备每秒钟读/写数据的字节上限。格式：major:minor bytes_per_second。例如：设置 cgroup lv0在/dev/sdc上每秒最多读 10KiB 数据： cgset -r blkio.throttle.read_bps_device=&ldquo;8:32 10240&rdquo; lv0。 blkio.throttle.read_iops_device / blkio.throttle.write_iops_device：指定cgroup中某设备每秒钟可以执行的读/写请求数上限。格式: major:minor operations_per_second。例如：设置cgroup lv0在/dev/sdc上每秒最多执行1000次读请求： cgset -r blkio.throttle.read_iops_device=&ldquo;8:32 1000&rdquo; lv0  针对特定操作(read, write, sync, 或async)设定读写速度上限">
 
 
-<meta itemprop="datePublished" content="2019-07-19T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2019-07-19T00:00:00&#43;00:00" />
+<meta itemprop="datePublished" content="2018-07-19T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-07-19T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="203">
 
 
@@ -23,15 +25,19 @@
 <meta itemprop="keywords" content="" />
 
   <meta property="og:title" content="Linux Cgroups资源限制配置参数用法" />
-<meta property="og:description" content="介绍关于Linux Cgroups资源限制配置参数用法" />
+<meta property="og:description" content="背景 Cgroups是control groups的缩写，是Linux内核提供的一种可以限制、记录、隔离进程组（process groups）所使用的物理资源（如：cpu,memory,IO等等）的机制。最初由google的工程师提出，后来被整合进Linux内核。本文重点cgroups配置参数用法，目的是能为后续容器开发提供帮助。
+配置参数用法 1.blkio - BLOCK IO资源管理 限额类 限额类是主要有两种策略，一种是基于完全公平队列调度的按权重分配各个cgroup所能占用总体资源的百分比。好处是当资源空闲时可以充分利用，但只能用于最底层节点cgroup的配置；另一种则是设定资源使用上限。这种限额在各个层次的cgroup都可以配置，但这种限制较为生硬并且容器之间依然会出现资源的竞争。
+ 按比例分配块设备IO资源  blkio.weight: 指定 cgroup 默认可用 IO 的比例（加权），值的范围为&rdquo;100~1000&rdquo;。该值可由具体设备的blkio.weight_device参数覆盖。例如：设置cgroup lv0的默认加权为 500： cgset -r blkio.weight=100 lv0。 blkio.weight_device：指定 cgroup 中指定设备的可用 IO 比例（加权），范围为&rdquo;100~1000&rdquo;，格式为&rdquo;major:minor weight&rdquo;。 例如：设置 cgroup lv0 对 /dev/sda 的加权为500。 cgset -r blkio.weight_device=&ldquo;8:0 500&rdquo; lv0。  控制IO读写速度上限  blkio.throttle.read_bps_device / blkio.throttle.write_bps_device：指定cgroup中某设备每秒钟读/写数据的字节上限。格式：major:minor bytes_per_second。例如：设置 cgroup lv0在/dev/sdc上每秒最多读 10KiB 数据： cgset -r blkio.throttle.read_bps_device=&ldquo;8:32 10240&rdquo; lv0。 blkio.throttle.read_iops_device / blkio.throttle.write_iops_device：指定cgroup中某设备每秒钟可以执行的读/写请求数上限。格式: major:minor operations_per_second。例如：设置cgroup lv0在/dev/sdc上每秒最多执行1000次读请求： cgset -r blkio.throttle.read_iops_device=&ldquo;8:32 1000&rdquo; lv0  针对特定操作(read, write, sync, 或async)设定读写速度上限" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://huangchunhua.github.io/blog/linuxcgroups%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E7%94%A8%E6%B3%95/" />
-<meta property="article:published_time" content="2019-07-19T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2019-07-19T00:00:00&#43;00:00"/>
+<meta property="article:published_time" content="2018-07-19T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2018-07-19T00:00:00&#43;00:00"/>
 
   <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Linux Cgroups资源限制配置参数用法"/>
-<meta name="twitter:description" content="介绍关于Linux Cgroups资源限制配置参数用法"/>
+<meta name="twitter:description" content="背景 Cgroups是control groups的缩写，是Linux内核提供的一种可以限制、记录、隔离进程组（process groups）所使用的物理资源（如：cpu,memory,IO等等）的机制。最初由google的工程师提出，后来被整合进Linux内核。本文重点cgroups配置参数用法，目的是能为后续容器开发提供帮助。
+配置参数用法 1.blkio - BLOCK IO资源管理 限额类 限额类是主要有两种策略，一种是基于完全公平队列调度的按权重分配各个cgroup所能占用总体资源的百分比。好处是当资源空闲时可以充分利用，但只能用于最底层节点cgroup的配置；另一种则是设定资源使用上限。这种限额在各个层次的cgroup都可以配置，但这种限制较为生硬并且容器之间依然会出现资源的竞争。
+ 按比例分配块设备IO资源  blkio.weight: 指定 cgroup 默认可用 IO 的比例（加权），值的范围为&rdquo;100~1000&rdquo;。该值可由具体设备的blkio.weight_device参数覆盖。例如：设置cgroup lv0的默认加权为 500： cgset -r blkio.weight=100 lv0。 blkio.weight_device：指定 cgroup 中指定设备的可用 IO 比例（加权），范围为&rdquo;100~1000&rdquo;，格式为&rdquo;major:minor weight&rdquo;。 例如：设置 cgroup lv0 对 /dev/sda 的加权为500。 cgset -r blkio.weight_device=&ldquo;8:0 500&rdquo; lv0。  控制IO读写速度上限  blkio.throttle.read_bps_device / blkio.throttle.write_bps_device：指定cgroup中某设备每秒钟读/写数据的字节上限。格式：major:minor bytes_per_second。例如：设置 cgroup lv0在/dev/sdc上每秒最多读 10KiB 数据： cgset -r blkio.throttle.read_bps_device=&ldquo;8:32 10240&rdquo; lv0。 blkio.throttle.read_iops_device / blkio.throttle.write_iops_device：指定cgroup中某设备每秒钟可以执行的读/写请求数上限。格式: major:minor operations_per_second。例如：设置cgroup lv0在/dev/sdc上每秒最多执行1000次读请求： cgset -r blkio.throttle.read_iops_device=&ldquo;8:32 1000&rdquo; lv0  针对特定操作(read, write, sync, 或async)设定读写速度上限"/>
 
   
 
@@ -101,12 +107,13 @@
     <h1>黄春华</h1>
   </header>
   <main>
-    <p>滴滴技术专家、对象存储负责人</p>
+    <p>滴滴技术专家.百度T5高级工程师</p>
   </main>
   
     <footer>
       <ul class="socnet-icons">
         
+
         <li><a href="//github.com/huangchunhua" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
 
 
@@ -132,7 +139,7 @@
 
 
 
-<li><a href="//wpa.qq.com/msgrd?v=3&amp;uin=190447919&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener" title="QQ" class="fab fa-qq"></a></li>
+
 
 
 
@@ -161,12 +168,10 @@
         <h2><a href="/blog/linuxcgroups%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E7%94%A8%E6%B3%95/">Linux Cgroups资源限制配置参数用法</a></h2>
     
     
-        <p>介绍关于Linux Cgroups资源限制配置参数用法</p>
-    
 </div>
   <div class="meta">
-    <time class="published" datetime="2019-07-19 00:00:00 &#43;0000 UTC">
-      July 19, 2019
+    <time class="published" datetime="2018-07-19 00:00:00 &#43;0000 UTC">
+      July 19, 2018
     </time>
     <span class="author">黄春华</span>
     
@@ -216,7 +221,7 @@
   </section>
   
 <a href="/blog/linuxcgroups%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E7%94%A8%E6%B3%95/" class="image featured">
-  <img src="/img/2019/07/pic03.jpg" alt="">
+  <img src="/img/2018/07/pic03.jpg" alt="">
 </a>
 
 
@@ -417,14 +422,14 @@
         <section>
           
 <a href="/blog/linuxcgroups%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E7%94%A8%E6%B3%95/" class="image featured">
-  <img src="/img/2019/07/pic03.jpg" alt="">
+  <img src="/img/2018/07/pic03.jpg" alt="">
 </a>
 
 
         </section>
         <header>
           <h1><a href="/blog/linuxcgroups%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E7%94%A8%E6%B3%95/">Linux Cgroups资源限制配置参数用法</a></h1>
-          <time class="published" datetime="">July 19, 2019</time>
+          <time class="published" datetime="">July 19, 2018</time>
         </header>
       </article>
       
@@ -432,14 +437,14 @@
         <section>
           
 <a href="/blog/linux%E5%AE%B9%E5%99%A8%E6%AD%A3%E7%A1%AE%E8%8E%B7%E5%8F%96loadavg%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="image featured">
-  <img src="/img/2019/07/pic04.jpg" alt="">
+  <img src="/img/2018/07/pic04.jpg" alt="">
 </a>
 
 
         </section>
         <header>
           <h1><a href="/blog/linux%E5%AE%B9%E5%99%A8%E6%AD%A3%E7%A1%AE%E8%8E%B7%E5%8F%96loadavg%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">Linux容器正确获取Loadavg的解决方案</a></h1>
-          <time class="published" datetime="">July 19, 2019</time>
+          <time class="published" datetime="">July 1, 2018</time>
         </header>
       </article>
       
@@ -473,7 +478,7 @@
     <header>
       <h1>About</h1>
     </header>
-    <p></p>
+    <p>黄春华博客</p>
     <footer>
       <a href="/about" class="button">Learn More</a>
     </footer>
@@ -510,7 +515,7 @@
 
 
 
-<li><a href="//wpa.qq.com/msgrd?v=3&amp;uin=190447919&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener" title="QQ" class="fab fa-qq"></a></li>
+
 
 
 
@@ -530,7 +535,7 @@
   
   <p class="copyright">
     
-      &copy; 2019
+      &copy; 2018
       
         Huang Chunhua
       

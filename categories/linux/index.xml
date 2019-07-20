@@ -6,7 +6,7 @@
     <description>Recent content in Linux on Huang Chunhua</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 19 Jul 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://huangchunhua.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Linux Cgroups资源限制配置参数用法</title>
       <link>https://huangchunhua.github.io/blog/linuxcgroups%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E7%94%A8%E6%B3%95/</link>
-      <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 19 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://huangchunhua.github.io/blog/linuxcgroups%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E7%94%A8%E6%B3%95/</guid>
       <description>背景 Cgroups是control groups的缩写，是Linux内核提供的一种可以限制、记录、隔离进程组（process groups）所使用的物理资源（如：cpu,memory,IO等等）的机制。最初由google的工程师提出，后来被整合进Linux内核。本文重点cgroups配置参数用法，目的是能为后续容器开发提供帮助。
@@ -25,7 +25,7 @@
     <item>
       <title>Linux容器正确获取Loadavg的解决方案</title>
       <link>https://huangchunhua.github.io/blog/linux%E5%AE%B9%E5%99%A8%E6%AD%A3%E7%A1%AE%E8%8E%B7%E5%8F%96loadavg%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</link>
-      <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 01 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://huangchunhua.github.io/blog/linux%E5%AE%B9%E5%99%A8%E6%AD%A3%E7%A1%AE%E8%8E%B7%E5%8F%96loadavg%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</guid>
       <description>背景 本文主要解决Linux容器中正确获取Loadavg信息。我们cat /proc/loadavg时会发现如下值：
