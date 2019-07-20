@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+<title>Linux Cgroups资源限制配置参数用法 - Huang Chunhua</title>
+<meta name="description" content="介绍关于Linux Cgroups资源限制配置参数用法">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+  <meta name="generator" content="Hugo 0.55.6" />
+  
+<meta itemprop="name" content="Linux Cgroups资源限制配置参数用法">
+<meta itemprop="description" content="介绍关于Linux Cgroups资源限制配置参数用法">
+
+
+<meta itemprop="datePublished" content="2019-07-19T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-07-19T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="203">
+
+
+
+<meta itemprop="keywords" content="" />
+
+  <meta property="og:title" content="Linux Cgroups资源限制配置参数用法" />
+<meta property="og:description" content="介绍关于Linux Cgroups资源限制配置参数用法" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://huangchunhua.github.io/blog/linuxcgroups%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E7%94%A8%E6%B3%95/" />
+<meta property="article:published_time" content="2019-07-19T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-07-19T00:00:00&#43;00:00"/>
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Linux Cgroups资源限制配置参数用法"/>
+<meta name="twitter:description" content="介绍关于Linux Cgroups资源限制配置参数用法"/>
+
+  
+
+  <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
+  
+    
+      <link rel="stylesheet" href="/css/normalize.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800,900|Source+Sans+Pro:400,700">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.1.0/css/flag-icon.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css" integrity="sha384-i1LQnF23gykqWXg6jxC2ZbCbUMxyw5gLZY6UiUS98LYV5unm8GWmfkIS6jqJfb4E" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" />
+      <link rel="stylesheet" href="/css/main.min.css">
+      <link rel="stylesheet" href="/css/add-on.css">
+    
+  
+  
+  
+  
+  
+</head>
+
+  <body>
+    
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/">
+        
+          
+            Blog
+          
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu">
+      
+        <a href="/" class="link"><i class="fas fa-home">&nbsp;</i>主页</a>
+      
+        <a href="/about/" class="link"><i class="far fa-id-card">&nbsp;</i>关于</a>
+      
+        <a href="/blog/" class="link"><i class="far fa-newspaper">&nbsp;</i>博客</a>
+      
+        <a href="/categories/" class="link"><i class="fas fa-sitemap">&nbsp;</i>标签</a>
+      
+        <a href="/contact/" class="link"><i class="far fa-envelope">&nbsp;</i>联系</a>
+      
+      
+      
+
+    </menu>
+    
+
+    
+    
+    <a href="#site-nav" class="nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro">
+  <a href="/"><img src="/img/main/logo.jpg" class="circle" width="" alt="Huang Chunhua" /></a>
+  <header>
+    <h1>黄春华</h1>
+  </header>
+  <main>
+    <p>滴滴技术专家、对象存储负责人</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+        <li><a href="//github.com/huangchunhua" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//wpa.qq.com/msgrd?v=3&amp;uin=190447919&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener" title="QQ" class="fab fa-qq"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:huangchunhua@nilebit.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        <article class="post">
+  <header>
+  <div class="title">
+    
+        <h2><a href="/blog/linuxcgroups%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E7%94%A8%E6%B3%95/">Linux Cgroups资源限制配置参数用法</a></h2>
+    
+    
+        <p>介绍关于Linux Cgroups资源限制配置参数用法</p>
+    
+</div>
+  <div class="meta">
+    <time class="published" datetime="2019-07-19 00:00:00 &#43;0000 UTC">
+      July 19, 2019
+    </time>
+    <span class="author">黄春华</span>
+    
+        <p>1 minute read</p>
+    
+  </div>
+</header>
+
+  <section id="socnet-share">
+    
+
+
+
+
+  
+    
+    <a href="//twitter.com/share?text=Linux%20Cgroups%e8%b5%84%e6%ba%90%e9%99%90%e5%88%b6%e9%85%8d%e7%bd%ae%e5%8f%82%e6%95%b0%e7%94%a8%e6%b3%95&amp;url=https%3a%2f%2fhuangchunhua.github.io%2fblog%2flinuxcgroups%25E8%25B5%2584%25E6%25BA%2590%25E9%2599%2590%25E5%2588%25B6%25E9%2585%258D%25E7%25BD%25AE%25E5%258F%2582%25E6%2595%25B0%25E7%2594%25A8%25E6%25B3%2595%2f" target="_blank" rel="noopener" class="share-btn twitter">
+        <i class="fab fa-twitter"></i><p>&nbsp;Twitter</p>
+      </a>
+  
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fhuangchunhua.github.io%2fblog%2flinuxcgroups%25E8%25B5%2584%25E6%25BA%2590%25E9%2599%2590%25E5%2588%25B6%25E9%2585%258D%25E7%25BD%25AE%25E5%258F%2582%25E6%2595%25B0%25E7%2594%25A8%25E6%25B3%2595%2f" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+    <a href="//www.reddit.com/submit?url=https%3a%2f%2fhuangchunhua.github.io%2fblog%2flinuxcgroups%25E8%25B5%2584%25E6%25BA%2590%25E9%2599%2590%25E5%2588%25B6%25E9%2585%258D%25E7%25BD%25AE%25E5%258F%2582%25E6%2595%25B0%25E7%2594%25A8%25E6%25B3%2595%2f&amp;title=Linux%20Cgroups%e8%b5%84%e6%ba%90%e9%99%90%e5%88%b6%e9%85%8d%e7%bd%ae%e5%8f%82%e6%95%b0%e7%94%a8%e6%b3%95" target="_blank" rel="noopener" class="share-btn reddit">
+          <i class="fab fa-reddit-alien"></i><p>&nbsp;Reddit</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fhuangchunhua.github.io%2fblog%2flinuxcgroups%25E8%25B5%2584%25E6%25BA%2590%25E9%2599%2590%25E5%2588%25B6%25E9%2585%258D%25E7%25BD%25AE%25E5%258F%2582%25E6%2595%25B0%25E7%2594%25A8%25E6%25B3%2595%2f&amp;title=Linux%20Cgroups%e8%b5%84%e6%ba%90%e9%99%90%e5%88%b6%e9%85%8d%e7%bd%ae%e5%8f%82%e6%95%b0%e7%94%a8%e6%b3%95" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check out this post by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=https%3a%2f%2fhuangchunhua.github.io%2fblog%2flinuxcgroups%25E8%25B5%2584%25E6%25BA%2590%25E9%2599%2590%25E5%2588%25B6%25E9%2585%258D%25E7%25BD%25AE%25E5%258F%2582%25E6%2595%25B0%25E7%2594%25A8%25E6%25B3%2595%2f" target="_blank" class="share-btn email">
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+  </section>
+  
+<a href="/blog/linuxcgroups%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E7%94%A8%E6%B3%95/" class="image featured">
+  <img src="/img/2019/07/pic03.jpg" alt="">
+</a>
+
+
+  <div class="content">
+    
+
+<h1 id="背景">背景</h1>
+
+<p>Cgroups是control groups的缩写，是Linux内核提供的一种可以限制、记录、隔离进程组（process groups）所使用的物理资源（如：cpu,memory,IO等等）的机制。最初由google的工程师提出，后来被整合进Linux内核。本文重点cgroups配置参数用法，目的是能为后续容器开发提供帮助。</p>
+
+<h1 id="配置参数用法">配置参数用法</h1>
+
+<h2 id="1-blkio-block-io资源管理">1.blkio - BLOCK IO资源管理</h2>
+
+<p><strong>限额类</strong>
+限额类是主要有两种策略，一种是基于完全公平队列调度的按权重分配各个cgroup所能占用总体资源的百分比。好处是当资源空闲时可以充分利用，但只能用于最底层节点cgroup的配置；另一种则是设定资源使用上限。这种限额在各个层次的cgroup都可以配置，但这种限制较为生硬并且容器之间依然会出现资源的竞争。</p>
+
+<ul>
+<li>按比例分配块设备IO资源
+
+<ul>
+<li><strong>blkio.weight</strong>: 指定 cgroup 默认可用 IO 的比例（加权），值的范围为&rdquo;100~1000&rdquo;。该值可由具体设备的blkio.weight_device参数覆盖。例如：设置cgroup lv0的默认加权为 500： <strong>cgset -r blkio.weight=100 lv0</strong>。</li>
+<li><strong>blkio.weight_device</strong>：指定 cgroup 中指定设备的可用 IO 比例（加权），范围为&rdquo;100~1000&rdquo;，格式为&rdquo;major:minor weight&rdquo;。 例如：设置 cgroup lv0 对 /dev/sda 的加权为500。 <strong>cgset -r blkio.weight_device=&ldquo;8:0 500&rdquo; lv0</strong>。</li>
+</ul></li>
+<li>控制IO读写速度上限
+
+<ul>
+<li><strong>blkio.throttle.read_bps_device / blkio.throttle.write_bps_device</strong>：指定cgroup中某设备每秒钟读/写数据的字节上限。格式：major:minor bytes_per_second。例如：设置 cgroup lv0在/dev/sdc上每秒最多读 10KiB 数据： <strong>cgset -r blkio.throttle.read_bps_device=&ldquo;8:32 10240&rdquo; lv0</strong>。</li>
+<li><strong>blkio.throttle.read_iops_device / blkio.throttle.write_iops_device</strong>：指定cgroup中某设备每秒钟可以执行的读/写请求数上限。格式: major:minor operations_per_second。例如：设置cgroup lv0在/dev/sdc上每秒最多执行1000次读请求： cgset -r blkio.throttle.read_iops_device=&ldquo;8:32 1000&rdquo; lv0</li>
+</ul></li>
+
+<li><p>针对特定操作(read, write, sync, 或async)设定读写速度上限</p>
+
+<ul>
+<li><strong>blkio.throttle.io_serviced</strong>：针对特定操作按每秒操作次数设定上限，格式：major:minor operation operations_per_second</li>
+<li><strong>blkio.throttle.io_service_bytes</strong>：针对特定操作按每秒数据量设定上限，格式major:minor operation bytes_per_second</li>
+</ul></li>
+
+<li><p>统计与监控</p>
+
+<ul>
+<li><strong>blkio.reset_stats</strong>：向该文件中写入一个整数，可以重置该 cgroup 中的报告计数。</li>
+<li><strong>blkio.time</strong>：统计cgroup对设备的访问时间，格式:major:minor milliseconds读取信息即可.</li>
+<li><strong>blkio.io_serviced</strong>：统计cgroup对特定设备的IO操作（包括read、write、sync及async）次数，格式：major:minor operation number</li>
+<li><strong>blkio.sectors</strong>：统计cgroup对设备扇区访问次数，格式：major:minor sector_count</li>
+<li><strong>blkio.io_service_bytes</strong>：统计cgroup对特定设备IO操作（包括read、write、sync及async）的数据量，格式：major:minor operation bytes</li>
+<li><strong>blkio.io_queued</strong>：统计cgroup的队列中对IO操作（包括read、write、sync及async）的请求次数，格式number operation</li>
+<li><strong>blkio.io_service_time</strong>：统计cgroup对特定设备的IO操作（包括read、write、sync及async）时间(单位为ns)，格式：major:minor operation time</li>
+<li><strong>blkio.io_merged</strong>：统计cgroup 将 BIOS 请求合并到IO操作（包括read、write、sync及async）请求的次数，格式number operation</li>
+<li><strong>blkio.io_wait_time</strong>：统计cgroup在各设​​​备​​​中各类型​​​IO操作（包括read、write、sync及async）在队列中的等待时间​(单位ns)，格式：major:minor operation time</li>
+<li><strong><strong>blkio.</strong>recursive_</strong>*：各类型的统计都有一个递归版本，Docker中使用的都是这个版本。获取的数据与非递归版本是一样的，但是包括cgroup所有层级的监控数据。</li>
+</ul></li>
+</ul>
+
+<h2 id="2-cpu资源管理">2.CPU资源管理</h2>
+
+<ul>
+<li>CPU资源控制
+
+<ul>
+<li><strong>cpu.rt_period_us</strong>：设定周期时间。</li>
+<li><strong>cpu.rt_runtime_us</strong>：设定周期中的运行时间。</li>
+<li><strong>cpu.cfs_period_us</strong>：设定周期时间，必须与cfs_quota_us配合使用。</li>
+<li><strong>cpu.cfs_quota_us</strong>：设定周期内最多可使用的时间。这里的配置指task对单个cpu的使用上限，若cfs_quota_us是cfs_period_us的两倍，就表示在两个核上完全使用。数值范围为1000 - 1000,000（微秒）。</li>
+<li><strong>cpu.stat</strong>：统计信息，包含nr_periods（表示经历了几个cfs_period_us周期）、nr_throttled（表示task被限制的次数）及throttled_time（表示task被限制的总时长）。</li>
+</ul></li>
+<li>CPU绑定
+
+<ul>
+<li><strong>cpuset.cpus</strong>：可使用的CPU编号，如0-2,16代表 0、1、2和16这4个CPU。</li>
+<li><strong>cpuset.mems</strong>：与CPU类似，表示cgroup可使用的memory node，格式同上.</li>
+</ul></li>
+<li>CPU资源报告
+
+<ul>
+<li><strong>cpuacct.usage</strong>：统计cgroup中所有task的cpu使用时长</li>
+<li><strong>cpuacct.stat</strong>：统计cgroup中所有task的用户态和内核态分别使用cpu的时长</li>
+<li><strong>cpuacct.usage_percpu</strong>：统计cgroup中所有task使用每个cpu的时长</li>
+<li><strong>cpu.shares</strong>：设定一个整数（必须大于等于2）表示相对权重，最后除以权重总和算出相对比例如：按比例分配CPU时间。（cgroup A设置100，cgroup B设置300，那么cgroup A中的task运行25%的CPU时间。对于一个4核CPU的系统来说，cgroup A 中的task可以100%占有某一个CPU，这个比例是相对整体的一个值。）</li>
+</ul></li>
+</ul>
+
+<h2 id="3-device-限制task对device的使用">3.device - 限制task对device的使用</h2>
+
+<ul>
+<li><p>设置黑白名单</p>
+
+<ul>
+<li><strong>devices.allow</strong>：允许名单，语法type device_types:node_numbers access type ；type有三种类型：b（块设备）、c（字符设备）、a（全部设备）；access也有三种方式：r（读）、w（写）、m（创建）。</li>
+<li><strong>devices.deny</strong>：禁止名单，语法格式同上。</li>
+</ul></li>
+
+<li><p>统计报告</p>
+
+<ul>
+<li><strong>devices.list</strong>：报​​​告​​​为​​​这​​​个​​​ cgroup 中​​​的​task设​​​定​​​访​​​问​​​控​​​制​​​的​​​设​​​备</li>
+</ul></li>
+</ul>
+
+<h2 id="4-内存资源管理">4.内存资源管理</h2>
+
+<ul>
+<li><p>设置限额</p>
+
+<ul>
+<li><strong>memory.limit_bytes</strong>：强制限制最大内存使用量。单位有k、m、g三种，填-1则代表无限制。</li>
+<li><strong>memory.soft_limit_bytes</strong>：软限制，必须比强制限制设置的值小时才有意义。填写格式同上。当整体内存紧张的情况下，task获取的内存就被限制在软限制额度之内，以保证不会有太多进程因内存不足。加入了内存的资源限制并不代表没有资源竞争。</li>
+<li><strong>memory.memsw.limit_bytes</strong>：设定最大内存与swap区内存之和的用量限制。填写格式同上。
+<br /></li>
+</ul></li>
+
+<li><p>报警与自动控制</p>
+
+<ul>
+<li><strong>memory.oom_control</strong>：值：0或1。0表示开启，当cgroup中的进程使用资源超过界限时立即杀死进程；1表示不启用。默认情况下，包含memory子系统的cgroup都<strong>启用</strong>。当oom_control不启用时，实际使用内存超过界限时进程会被暂停直到有空闲的内存资源。</li>
+</ul></li>
+
+<li><p>统计与监控类</p>
+
+<ul>
+<li><strong>memory.usage_bytes</strong>：报​​​告​​​该​​​cgroup中​​​进​​​程​​​使​​​用​​​的​​​当​​​前​​​总​​​内​​​存​​​用​​​量（以字节为单位）。</li>
+<li><strong>memory.max_usage_bytes</strong>：报​​​告​​​该​​​cgroup中​​​进​​​程​​​使​​​用​​​的​​​最​​​大​​​内​​​存​​​用​​​量。</li>
+<li><strong>memory.failcnt</strong>：报​​​告​​​内​​​存​​​达​​​到​​​在​​​ memory.limit_in_bytes设​​​定​​​的​​​限​​​制​​​值​​​的​​​次​​​数​​​。</li>
+<li><strong>memory.stat</strong>：包含大量的内存统计数据。</li>
+<li><strong>cache</strong>：页​​​缓​​​存​​​，包​​​括​​​ tmpfs（shmem），单位为字节。</li>
+<li><strong>rss</strong>：匿​​​名​​​和​​​ swap 缓​​​存​​​，不​​​包​​​括​​​ tmpfs（shmem），单位为字节。</li>
+<li><strong>mapped_file</strong>：memory-mapped 映​​​射​​​的​​​文​​​件​​​大​​​小​​​，包​​​括​​​ tmpfs（shmem），单​​​位​​​为​​​字​​​节​​​</li>
+<li><strong>pgpgin</strong>：存​​​入​​​内​​​存​​​中​​​的​​​页​​​数​​​。</li>
+<li><strong>pgpgout</strong>：从​​​内​​​存​​​中​​​读​​​出​​​的​​​页​​​数。</li>
+<li><strong>swap</strong>：swap 用​​​量​​​，单​​​位​​​为​​​字​​​节​​​。</li>
+<li><strong>active_anon</strong>：在​​​活​​​跃​​​的​​​最​​​近​​​最​​​少​​​使​​​用​​​（least-recently-used，LRU）列​​​表​​​中​​​的​​​匿​​​名​​​和​​​ swap 缓​​​存​​​，包​​​括​​​ tmpfs（shmem），单​​​位​​​为​​​字​​​节​​​。</li>
+<li><strong>inactive_anon</strong>：不​​​活​​​跃​​​的​​​ LRU 列​​​表​​​中​​​的​​​匿​​​名​​​和​​​ swap 缓​​​存​​​，包​​​括​​​ tmpfs（shmem），单​​​位​​​为​​​字​​​节。</li>
+<li><strong>active_file</strong>：活​​​跃​​​ LRU 列​​​表​​​中​​​的​​​ file-backed 内​​​存​​​，以​​​字​​​节​​​为​​​单​​​位。</li>
+<li><strong>inactive_file</strong>：不​​​活​​​跃​​​ LRU 列​​​表​​​中​​​的​​​ file-backed 内​​​存​​​，以​​​字​​​节​​​为​​​单​​​位.</li>
+<li><strong>unevictable</strong>：无​​​法​​​再​​​生​​​的​​​内​​​存​​​，以​​​字​​​节​​​为​​​单​​​位​​​</li>
+<li><strong>hierarchical_memory_limit</strong>：包​​​含​​​ memory cgroup 的​​​层​​​级​​​的​​​内​​​存​​​限​​​制​​​，单​​​位​​​为​​​字​​​节​​​</li>
+<li><strong>hierarchical_memsw_limit</strong>：包​​​含​​​ memory cgroup 的​​​层​​​级​​​的​​​内​​​存​​​加​​​ swap 限​​​制​​​，单​​​位​​​为​​​字​​​节​​​.</li>
+</ul></li>
+</ul>
+
+<h2 id="更多参考">更多参考</h2>
+
+<ul>
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/">https://www.kernel.org/doc/Documentation/cgroup-v1/</a></li>
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v2.txt">https://www.kernel.org/doc/Documentation/cgroup-v2.txt</a></li>
+</ul>
+
+<p>作者：黄春华</p>
+
+  </div>
+  <footer>
+    <ul class="stats">
+  
+    
+    
+      <li class="categories">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="https://huangchunhua.github.io/categories/linux">Linux</a></li>
+          
+        </ul>
+      </li>
+    
+  
+  
+    <li class="tags">
+      <ul>
+        <li>None</li>
+      </ul>
+    </li>
+  
+</ul>
+
+  </footer>
+</article>
+<article class="post">
+  
+
+</article>
+<div class="pagination">
+  
+    <a href="/blog/linux%E5%AE%B9%E5%99%A8%E6%AD%A3%E7%A1%AE%E8%8E%B7%E5%8F%96loadavg%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="button big previous"><i class="fas fa-angle-left"></i> Linux容器正确获取Loadavg的解决方案</a>
+  
+  
+</div>
+
+
+      </main>
+      <section id="site-sidebar">
+  
+    <section id="recent-posts">
+      <header>
+        <h1>Recent posts</h1>
+      </header>
+      
+      <article class="mini-post">
+        <section>
+          
+<a href="/blog/linuxcgroups%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E7%94%A8%E6%B3%95/" class="image featured">
+  <img src="/img/2019/07/pic03.jpg" alt="">
+</a>
+
+
+        </section>
+        <header>
+          <h1><a href="/blog/linuxcgroups%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E7%94%A8%E6%B3%95/">Linux Cgroups资源限制配置参数用法</a></h1>
+          <time class="published" datetime="">July 19, 2019</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+<a href="/blog/linux%E5%AE%B9%E5%99%A8%E6%AD%A3%E7%A1%AE%E8%8E%B7%E5%8F%96loadavg%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="image featured">
+  <img src="/img/2019/07/pic04.jpg" alt="">
+</a>
+
+
+        </section>
+        <header>
+          <h1><a href="/blog/linux%E5%AE%B9%E5%99%A8%E6%AD%A3%E7%A1%AE%E8%8E%B7%E5%8F%96loadavg%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">Linux容器正确获取Loadavg的解决方案</a></h1>
+          <time class="published" datetime="">July 19, 2019</time>
+        </header>
+      </article>
+      
+      
+    </section>
+  
+
+  
+    
+      <section id="categories">
+        <header>
+          <h1><a href="/categories">Categories</a></h1>
+        </header>
+        <ul>
+          
+            
+          
+          
+          <li>
+            
+              <a href="/categories/linux/">linux<span class="count">2</span></a>
+            
+          
+          </li>
+        </ul>
+      </section>
+    
+  
+
+  <section id="mini-bio">
+    <header>
+      <h1>About</h1>
+    </header>
+    <p></p>
+    <footer>
+      <a href="/about" class="button">Learn More</a>
+    </footer>
+  </section>
+</section>
+
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/huangchunhua" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//wpa.qq.com/msgrd?v=3&amp;uin=190447919&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener" title="QQ" class="fab fa-qq"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:huangchunhua@nilebit.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+  
+  <p class="copyright">
+    
+      &copy; 2019
+      
+        Huang Chunhua
+      
+    .
+    Powered by <a href="//gohugo.io" target="_blank" rel="noopener">Hugo</a>
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/html.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/css.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/js.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/toml.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/skel/3.0.1/skel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
+  <script src=/js/util.js></script>
+  <script src=/js/main.js></script>
+  <script src=/js/add-on.js></script>
+  
+
+
+
+    </div>
+  </body>
+</html>
